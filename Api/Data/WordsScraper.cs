@@ -33,35 +33,32 @@ namespace Api.Data
     }
     private async Task<IHtmlDocument> ExtractWebsiteHtml(string Url)
     {
-      var config = new Configuration()
-               .WithDefaultLoader() //Instatiate a config obj
-               .WithJs(); //Allows JavaScript loading 
-      var document = await BrowsingContext.New(config)
-      .OpenAsync(Url).WhenStable(); //Returns the DOM of the website
-      HtmlParser parser = new HtmlParser(); //Instantiate the parser
-      var htmlDoc = document.ToHtml(); //Converts the IDocument to string
-      return parser.ParseDocument(htmlDoc); //Converts the string to IHtmlDocument
+      HttpClient httpClient = new HttpClient(); //Initialize the HttpClient
+      HttpResponseMessage request = await httpClient.GetAsync(Url); //Fires a Get request to the Url
+      Stream response = await request.Content.ReadAsStreamAsync(); //Serialize the request
+      HtmlParser parser = new HtmlParser(); //Initialize the parser
+      return parser.ParseDocument(response); //Converts the IDocumen to IHtmlDocument
     }
 
-    private Task<IEnumerable<IElement>> ExtractWords(IHtmlDocument htmlDocument)
+    private IEnumerable<IElement> ExtractWords(IHtmlDocument htmlDocument)
     {
-      IEnumerable<IElement> words = htmlDocument
-        .QuerySelectorAll(".wordpanel"); //Extracts Dom Elements with the specified class
-      return Task.FromResult<IEnumerable<IElement>>(words);
+      return htmlDocument
+      .All
+      .Where(c => c.ClassName == "wordpanel") //Extracts Dom Elements with the specified class
+      .Take(15); //Limits the number to 15 element
     }
 
-    public async Task<IEnumerable<Rhyme>> MapRhymes(string wordToRhymeWith)
+    public async Task<List<Rhyme>> MapRhymes(string wordToRhymeWith)
     {
       string url = ConstructUrl(wordToRhymeWith); //Instantiates the Url
       var siteHtml = await ExtractWebsiteHtml(url); //Extract the DOM from the website
-      var words = await ExtractWords(siteHtml); //Extracts words from the DOM
+      var words = ExtractWords(siteHtml); //Extracts words from the DOM
       List<Rhyme> rhymes= new List<Rhyme>();
       foreach (var word in words)
       {
           rhymes.Add(CreateRhyme(word)); //Map word to Rhyme objects
       }
-      IEnumerable<Rhyme> RhymesEnum = rhymes;
-      return RhymesEnum;
+      return rhymes;
     }
 
     private Rhyme CreateRhyme(IElement wordElement) {
