@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Api.Data;
-using Api.Interfaces;
+using Api.Rhyme;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,7 +33,7 @@ namespace api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "api", Version = "v1" });
             });
-            services.AddScoped<IWordsScraper,WordsScraper>();
+            services.AddScoped<IWordsScraperService,WordsScraperService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

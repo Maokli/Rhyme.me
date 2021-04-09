@@ -1,4 +1,4 @@
-namespace Api.Models
+namespace Api.Rhyme
 {
     public class Rhyme
     {

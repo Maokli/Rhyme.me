@@ -1,31 +1,25 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Threading;
 using System.Threading.Tasks;
-using AngleSharp;
 using AngleSharp.Dom;
 using AngleSharp.Html.Dom;
 using AngleSharp.Html.Parser;
-using AngleSharp.Io;
-using Api.Interfaces;
-using Api.Models;
 using Microsoft.Extensions.Configuration;
 
-namespace Api.Data
+namespace Api.Rhyme
 {
     /// <summary>
     ///WebScraper class.
     ///Contains all the functionality to scrape the web and get data.
     /// </summary>
-  public class WordsScraper : IWordsScraper
+  public class WordsScraperService : IWordsScraperService
   {
     private readonly Microsoft.Extensions.Configuration.IConfiguration _config;
 
 
-    public WordsScraper(Microsoft.Extensions.Configuration.IConfiguration config)
+    public WordsScraperService(
+      Microsoft.Extensions.Configuration.IConfiguration config)
     {
       _config = config;
     }
@@ -80,9 +74,9 @@ namespace Api.Data
     private IEnumerable<IElement> ExtractWords(IHtmlDocument htmlDocument)
     {
       return htmlDocument
-      .All
-      .Where(c => c.ClassName == "wordpanel") //Extracts Dom Elements with the specified class
-      .Take(15); //Limits the number to 15 element
+        .All
+        .Where(c => c.ClassName == "wordpanel") //Extracts Dom Elements with the specified class
+        .Take(15); //Limits the number to 15 element
     }
 
 

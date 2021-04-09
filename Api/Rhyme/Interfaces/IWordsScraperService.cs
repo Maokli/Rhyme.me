@@ -1,12 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AngleSharp.Dom;
-using AngleSharp.Html.Dom;
-using Api.Models;
 
-namespace Api.Interfaces
+namespace Api.Rhyme
 {
-    public interface IWordsScraper
+    public interface IWordsScraperService
     {
         Task<IEnumerable<Rhyme>> MapRhymes(string wordToRhymeWith);
     }

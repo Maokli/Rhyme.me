@@ -1,16 +1,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Api.Data;
-using Api.Interfaces;
-using Api.Models;
+using Api.Controllers;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Api.Controllers
+namespace Api.Rhyme
 {
   public class RhymesController : BaseApiController
   {
-    private readonly IWordsScraper _scraper;
-    public RhymesController(IWordsScraper scraper)
+    private readonly IWordsScraperService _scraper;
+    public RhymesController(IWordsScraperService scraper)
     {
       _scraper = scraper; //Initializes a WordsScraper object
     }
