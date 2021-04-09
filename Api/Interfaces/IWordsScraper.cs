@@ -8,6 +8,6 @@ namespace Api.Interfaces
 {
     public interface IWordsScraper
     {
-        Task<List<Rhyme>> MapRhymes(string wordToRhymeWith);
+        Task<IEnumerable<Rhyme>> MapRhymes(string wordToRhymeWith);
     }
 }
