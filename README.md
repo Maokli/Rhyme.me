@@ -1,6 +1,25 @@
-# Getting Started with Create React App
+# About Rhyme Me
+Rhyme me is a rap assistant, you basically speak into the mic and you get a list of words that rhyme with the last thing you said.
+[Try it out](https://rhymeme.herokuapp.com/)
+# How Does it work?
+## The FrontEnd
+The react app uses a voice recognition AI, transcripts what you say and gets the last word and sends it to the api in a GET request
+## The backend
+The ASP.NET Api then takes that word and scrapes the web for words rhyming with it and sends back a list of that words that is then displayed to the user
+### Endpoints
+The project consists of a single endpoint
+localhost:5001/api/rhymes/{keyword}
+the keyword is the word you want results to rhyme with
+# How Do I run it?
+First download .NET sdk, runtime and ASP.NET (hosting bundle is preferred for windows users) from [here](https://dotnet.microsoft.com/download/dotnet/5.0)
+then on terminal run this command
+`dotnet watch run`
+I use SSR so running the API is enough, to test it.
+if you wish to edit the frontEnd, which I don't recommend because I didn't take a react course or anything before this and the course is a hell of a mess, then edit it, and run `npm run`
+Note: your api should be running for the react app to work
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# More React info
+
 
 ## Available Scripts
 
